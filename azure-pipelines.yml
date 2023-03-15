@@ -1,0 +1,59 @@
+# Starter pipeline
+
+
+
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+# trigger:
+# - main
+
+pool: local
+steps:
+# - script: echo Hello, world!
+#   displayName: 'Run a one-line script'
+
+# - script: |
+#     echo Add other tasks to build, test, and deploy your project.
+#     echo See https://aka.ms/yaml
+#   displayName: 'Run a multi-line script'
+# - task: Maven@3
+#   inputs:
+#     mavenPomFile: 'mig/pom.xml'
+#     publishJUnitResults: false
+#     testResultsFiles: '**/surefire-reports/TEST-*.xml'
+#     javaHomeOption: 'JDKVersion'
+#     mavenVersionOption: 'Default'
+#     mavenAuthenticateFeed: true
+#     effectivePomSkip: false
+#     sonarQubeRunAnalysis: false
+
+# - task: CopyFiles@2
+#   inputs:
+#     contents: '**/*.jar'
+#     targetFolder: $(Build.ArtifactStagingDirectory)
+# - script:   echo $(Build.ArtifactStagingDirectory)
+#   displayName: 'Build with Maven'
+# - task: MavenAuthenticate@0
+#   inputs:
+#     MavenServiceConnections: github
+
+
+- task: Maven@4
+  inputs:
+    mavenPomFile: 'mig/pom.xml'
+    goals: 'deploy'
+    publishJUnitResults: false
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
+# - task: PowerShell@2
+#   displayName: 'Publish Maven package to GitHub'
+#   inputs:
+# - script:  cd mig && mvn deploy:deploy-file -Dfile=$(Build.ArtifactStagingDirectory)/mig/target/mig-1.0-SNAPSHOT.jar  -DpomFile=pom.xml -DrepositoryId=github -Durl=https://maven.pkg.github.com/balraj0017/java_ado -Dtoken=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
+# - script:     mvn deploy:deploy-file -Dfile=$(Build.ArtifactStagingDirectory)/mig/target/mig-1.0-SNAPSHOT.jar -DpomFile=mig/pom.xml -DrepositoryId=github -Durl=https://maven.pkg.github.com/balraj0017/java_ado -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dtoken=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
+
+  # displayName: 'Publish Maven package to GitHub'
